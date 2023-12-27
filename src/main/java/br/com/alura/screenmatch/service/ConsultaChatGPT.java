@@ -3,11 +3,15 @@ package br.com.alura.screenmatch.service;
 import com.theokanning.openai.completion.CompletionRequest;
 import com.theokanning.openai.service.OpenAiService;
 
-    public class ConsultaChatGPT {
+public class ConsultaChatGPT {
+
+    static GetKeyFromProperties getKeyFromProperties = new GetKeyFromProperties();
+
         public static String obterTraducao(String texto) {
 
-            OpenAiService service = new OpenAiService("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");
+            String apiKey = getKeyFromProperties.obterKeyValue("CHATGPT_APIKEY");
 
+            OpenAiService service = new OpenAiService(apiKey);
             CompletionRequest requisicao = CompletionRequest.builder()
                     .model("text-davinci-003")
                     .prompt("traduza para o português o texto: " + texto)
