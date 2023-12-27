@@ -11,7 +11,7 @@ public class GetKeyFromProperties {
     public String obterKeyValue (String keyName){
 
         Properties properties = new Properties();
-        String fileName = "application-secrets.properties";
+        String fileName = "application-secret.properties";
         String keyValue = null;
 
         try (InputStream input = new FileInputStream(Thread.currentThread().getContextClassLoader().getResource("").getPath() + fileName)){
