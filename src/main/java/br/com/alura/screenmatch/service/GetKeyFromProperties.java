@@ -23,8 +23,6 @@ public class GetKeyFromProperties {
 
                 keyValue = properties.getProperty(keyName);
             }
-
-            properties.load(input);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
