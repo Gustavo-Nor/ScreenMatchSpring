@@ -142,6 +142,8 @@ public class Principal {
                     4 - Buscar série por título
                     5 - Buscar séries por ator
                     6 - Buscar top 5 séries
+                    7 - Buscar séries por categoria
+                    8 - Buscar séries por número máximo de temporadas e avaliação mínima
                                     
                     0 - Sair                                 
                     """;
@@ -168,6 +170,12 @@ public class Principal {
                     break;
                 case 6:
                     buscarTop5Series();
+                    break;
+                case 7:
+                    buscarSeriesPorCategoria();
+                    break;
+                case 8:
+                    buscarSeriesPorNumeroTemporadasEAvaliacao();
                     break;
                 case 0:
                     System.out.println("Saindo...");
@@ -259,7 +267,25 @@ public class Principal {
         List<Serie> seriesTop5 = repositorio.findTop5ByOrderByAvaliacaoDesc();
         System.out.println("Top 5 séries: ");
         seriesTop5.forEach(s -> System.out.println(s.getTitulo() + " avaliação: " + s.getAvaliacao()));
+    }
 
+    private void buscarSeriesPorCategoria() {
+        System.out.println("Deseja buscar séries de qual categoria/genero? ");
+        var nomeGenero = leitura.nextLine();
+        Categoria categoria = Categoria.fromPortugues(nomeGenero);
+        List<Serie> seriesPorCategoria = repositorio.findByGenero(categoria);
+        System.out.println("Séries da categoria " + nomeGenero + " : ");
+        seriesPorCategoria.forEach(s -> System.out.println(s.getTitulo()));
+    }
 
+    private void buscarSeriesPorNumeroTemporadasEAvaliacao() {
+        System.out.println("Deseja buscar séries com até quantas temporadas: ");
+        var numeroMaximoTemporadas = leitura.nextInt();
+        System.out.println("Qual a avaliação mínima das séries: ");
+        var avaliacaoMinima = leitura.nextDouble();
+        List<Serie> seriePorNumeroTemporadasEAvaliacao = repositorio.findByTotalTemporadasLessThanEqualAndAvaliacaoGreaterThanEqual(numeroMaximoTemporadas, avaliacaoMinima);
+        System.out.println("Lista de séries com até " + numeroMaximoTemporadas + " temporadas e avaliação mínima de " + avaliacaoMinima);
+        seriePorNumeroTemporadasEAvaliacao.forEach(s -> System.out.println(s.getTitulo() + " Total de temporadas: " +
+                s.getTotalTemporadas() + " e avaliação: " + s.getAvaliacao()));
     }
 }
